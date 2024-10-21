@@ -11,8 +11,8 @@ namespace MyfirstApp
             file1.Run();
             
             // Вызов метода из File2.cs
-            Class2 file2 = new Class2();
-            file2.Run();
+            // Class2 file2 = new Class2();
+            // file2.Run();
         }
     }
 }

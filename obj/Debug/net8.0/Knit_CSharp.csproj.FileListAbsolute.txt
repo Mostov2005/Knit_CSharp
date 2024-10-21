@@ -12,3 +12,4 @@ c:\Users\Mostov\Knit_CSharp\obj\Debug\net8.0\refint\Knit_CSharp.dll
 c:\Users\Mostov\Knit_CSharp\obj\Debug\net8.0\Knit_CSharp.pdb
 C:\Users\Mostov\Knit_CSharp\obj\Debug\net8.0\Knit_CSharp.genruntimeconfig.cache
 C:\Users\Mostov\Knit_CSharp\obj\Debug\net8.0\ref\Knit_CSharp.dll
+c:\Users\Mostov\Knit_CSharp\obj\Debug\net8.0\Knit_CSharp.sourcelink.json

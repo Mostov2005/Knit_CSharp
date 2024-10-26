@@ -1,30 +1,31 @@
 using System;
 using System.IO;
 
-namespace MyfirstApp
+namespace Knit_CSharp
 {
     public class Class1
     {
 
-    // 15. Дан файл, компонентами которого являются числа. Число компонент файла делится на два.
-    // Создать новый файл, в который будет записываться наименьшее из каждой пары чисел первого файла.
+        // 15. Дан файл, компонентами которого являются числа. Число компонент файла делится на два.
+        // Создать новый файл, в который будет записываться наименьшее из каждой пары чисел первого файла.
         public void Run()
         {
             string directoryPath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File";
-            Directory.CreateDirectory(directoryPath); // Создание папки, если она не существует
+            Directory.CreateDirectory(directoryPath); // Создание папки если она не существует
 
             // Путь к файлам
             string filePath1 = Path.Combine(directoryPath, "input.txt");
             string filePath2 = Path.Combine(directoryPath, "output.txt");
 
             // Чтение чисел из файла
-            string[] lines = File.ReadAllLines(filePath1);
-            int[] numbers = Array.ConvertAll(lines, int.Parse);
+
+            string[] oldNumbers = File.ReadAllText(filePath1).Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            int[] numbers = Array.ConvertAll(oldNumbers, int.Parse);
 
             // Проверка на четность количества чисел(В условии указано, что чётное)
             if (numbers.Length % 2 != 0)
             {
-                Console.WriteLine("Количество чисел должно быть четным.");
+                Console.WriteLine("Количество чисел должно быть четным!!!");
                 return;
             }
 
@@ -37,7 +38,7 @@ namespace MyfirstApp
                 }
             }
 
-            Console.WriteLine("Результаты записаны в файл " + filePath2);
+            Console.WriteLine("Результаты записаны в файл: " + filePath2);
         }
     }
 }

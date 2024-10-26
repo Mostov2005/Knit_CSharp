@@ -7,12 +7,12 @@ namespace Knit_CSharp
         static void Main(string[] args)
         {
             // Вызов метода из File1.cs
-            Class1 file1 = new Class1();
-            file1.Run();
+            // Class1 file1 = new Class1();
+            // file1.Run();
             
             // Вызов метода из File2.cs
-            //Class2 file2 = new Class2();
-            //file2.Run();
+            Class2 file2 = new Class2();
+            file2.Run();
         }
     }
 }

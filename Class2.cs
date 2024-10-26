@@ -1,32 +1,31 @@
-// File1.cs
 using System;
 using System.Diagnostics;
 using System.Text;
-namespace MyfirstApp
+
+namespace Knit_CSharp
 {
     public class Class2
-
     {
-        static void Run(string[] args)
+        public void Run()
         {
             // Генерация случайной строки длиной 100000 символов
-            string text = GenerateRandomString(100000);
-            // Генерация случайной подстроки длиной 100 символов
+            string text = GenerateRandomString(100_000);
+            // Генерация случайной подстроки длиной 3 символа
             string pattern = GenerateRandomString(100);
+            Console.WriteLine($"Искомая подстрока: {pattern}");
 
             // Замер времени выполнения Прямого поиска (наивный поиск)
             Stopwatch stopwatch = new Stopwatch();
-
             stopwatch.Start();
             int naiveResult = NaiveSearch(text, pattern);
             stopwatch.Stop();
-            Console.WriteLine($"Наивный поиск: результат = {naiveResult}, время = {stopwatch.ElapsedMilliseconds} мс");
+            Console.WriteLine($"Наивный поиск: результат = {naiveResult}, время = {stopwatch.Elapsed.TotalMilliseconds} мс");
 
             // Замер времени выполнения Алгоритма Карпа-Рабина
             stopwatch.Restart();
             int karpRabinResult = RabinKarpSearch(text, pattern);
             stopwatch.Stop();
-            Console.WriteLine($"Алгоритм Карпа-Рабина: результат = {karpRabinResult}, время = {stopwatch.ElapsedMilliseconds} мс");
+            Console.WriteLine($"Алгоритм Карпа-Рабина: результат = {karpRabinResult}, время = {stopwatch.Elapsed.TotalMilliseconds} мс");
         }
 
         // Прямой поиск подстроки
@@ -54,53 +53,73 @@ namespace MyfirstApp
         {
             int n = text.Length;
             int m = pattern.Length;
-            int q = 101; // Простое число
-            int d = 256; // Размер алфавита
-            int h = 1;
-            int p = 0; // Хэш паттерна
-            int t = 0; // Хэш текста
-            int i, j;
+            const long P = 37; // Простое число для хеширования
+            long[] pwp = CalculatePowers(n, P); // Массив степеней P
+            long[] h = CalculatePrefixHashes(text, pwp); // Хэши префиксов текста
+            long h_s = CalculateHash(pattern, pwp); // Хэш для подстроки
 
-            // Вычисляем h = pow(d, m-1) % q
-            for (i = 0; i < m - 1; i++)
-                h = (h * d) % q;
-
-            // Вычисляем начальные хэши паттерна и первого окна текста
-            for (i = 0; i < m; i++)
+            // Поиск подстроки
+            for (int i = 0; i + m - 1 < n; i++)
             {
-                p = (d * p + pattern[i]) % q;
-                t = (d * t + text[i]) % q;
-            }
-
-            // Пробегаем по тексту
-            for (i = 0; i <= n - m; i++)
-            {
-                // Проверяем хэши
-                if (p == t)
+                // Находим хэш для текущего окна текста
+                long cur_h = h[i + m - 1];
+                if (i > 0)
                 {
+                    cur_h -= h[i - 1]; // Корректируем хэш для текущего окна
+                }
+
+                // Сравниваем хэши
+                if (cur_h == h_s * pwp[i])
+                {
+                    int j;
                     // Если хэши совпадают, проверяем символы
                     for (j = 0; j < m; j++)
                     {
                         if (text[i + j] != pattern[j])
                             break;
                     }
-
                     if (j == m) // Совпадение найдено
                         return i;
-                }
-
-                // Вычисляем хэш следующего окна текста
-                if (i < n - m)
-                {
-                    t = (d * (t - text[i] * h) + text[i + m]) % q;
-
-                    // Если t оказалось отрицательным, добавляем q
-                    if (t < 0)
-                        t = (t + q);
                 }
             }
 
             return -1; // Подстрока не найдена
+        }
+
+        // Вычисление массива степеней P
+        static long[] CalculatePowers(int length, long P)
+        {
+            long[] pwp = new long[length];
+            pwp[0] = 1;
+            for (int i = 1; i < length; i++)
+            {
+                pwp[i] = pwp[i - 1] * P;
+            }
+            return pwp;
+        }
+
+        // Вычисление хэш-значений для всех префиксов строки
+        static long[] CalculatePrefixHashes(string text, long[] pwp)
+        {
+            long[] h = new long[text.Length];
+            for (int i = 0; i < text.Length; i++)
+            {
+                h[i] = (text[i] - 'а' + 1) * pwp[i]; // Преобразование символа в значение
+                if (i > 0)
+                    h[i] += h[i - 1]; // Накопление хэшей для префиксов
+            }
+            return h;
+        }
+
+        // Вычисление хэш-значения для подстроки
+        static long CalculateHash(string pattern, long[] pwp)
+        {
+            long h_s = 0;
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                h_s += (pattern[i] - 'а' + 1) * pwp[i];
+            }
+            return h_s;
         }
 
         // Генерация случайной строки из букв русского алфавита
@@ -119,4 +138,3 @@ namespace MyfirstApp
         }
     }
 }
-

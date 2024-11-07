@@ -1,44 +1,101 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Knit_CSharp
 {
-    public class Class1
+    struct SPoint
     {
+        public int x, y;
 
-        // 15. Дан файл, компонентами которого являются числа. Число компонент файла делится на два.
-        // Создать новый файл, в который будет записываться наименьшее из каждой пары чисел первого файла.
+        public SPoint(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void Show()
+        {
+            Console.WriteLine("({0}, {1})", x, y);
+        }
+
+        public double DistanceTo(SPoint other)
+        {
+            int dx = x - other.x;
+            int dy = y - other.y;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+    }
+
+    class Class1
+    {
         public void Run()
         {
-            string directoryPath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File";
-            Directory.CreateDirectory(directoryPath); // Создание папки если она не существует
+            SPoint[] array = Input();
+            // Находим точки с минимальной суммой расстояний до остальных
+            List<SPoint> optimalPoints = FindOptimalPoints(array);
 
-            // Путь к файлам
-            string filePath1 = Path.Combine(directoryPath, "input.txt");
-            string filePath2 = Path.Combine(directoryPath, "output.txt");
-
-            // Чтение чисел из файла
-
-            string[] oldNumbers = File.ReadAllText(filePath1).Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            int[] numbers = Array.ConvertAll(oldNumbers, int.Parse);
-
-            // Проверка на четность количества чисел(В условии указано, что чётное)
-            if (numbers.Length % 2 != 0)
+            Console.WriteLine("Точки с минимальной суммой расстояний до остальных:");
+            foreach (SPoint point in optimalPoints)
             {
-                Console.WriteLine("Количество чисел должно быть четным!!!");
-                return;
+                point.Show();
             }
+        }
 
-            using (StreamWriter writer = new StreamWriter(filePath2))
+        static public SPoint[] Input() // Читаем данные из файла
+        {
+            using (StreamReader fileIn = new StreamReader("C:\\Users\\Mostov\\Knit_CSharp\\System_File\\input.txt"))
             {
-                for (int i = 0; i < numbers.Length; i += 2)
+                int n = int.Parse(fileIn.ReadLine());
+                SPoint[] ar = new SPoint[n];
+                for (int i = 0; i < n; i++)
                 {
-                    int min = Math.Min(numbers[i], numbers[i + 1]);
-                    writer.WriteLine(min);
+                    string[] text = fileIn.ReadLine().Split(' ');
+                    ar[i] = new SPoint(int.Parse(text[0]), int.Parse(text[1]));
+                }
+                return ar;
+            }
+        }
+
+        static void Print(SPoint[] array) 
+        {
+            foreach (SPoint item in array)
+            {
+                item.Show();
+            }
+        }
+
+        // Метод для нахождения всех точек с минимальной суммой расстояний до остальных точек
+        static List<SPoint> FindOptimalPoints(SPoint[] array)
+        {
+            double minTotalDistance = double.MaxValue;
+            List<SPoint> optimalPoints = new List<SPoint>();
+
+            foreach (SPoint point in array)
+            {
+                double totalDistance = 0;
+
+                foreach (SPoint otherPoint in array)
+                {
+                    if (!point.Equals(otherPoint)) // Не учитываем расстояние до самой себя
+                    {
+                        totalDistance += point.DistanceTo(otherPoint);
+                    }
+                }
+
+                if (totalDistance < minTotalDistance)
+                {
+                    minTotalDistance = totalDistance;
+                    optimalPoints.Clear();
+                    optimalPoints.Add(point);
+                }
+                else if (totalDistance == minTotalDistance)
+                {
+                    optimalPoints.Add(point);
                 }
             }
 
-            Console.WriteLine("Результаты записаны в файл: " + filePath2);
+            return optimalPoints;
         }
     }
 }

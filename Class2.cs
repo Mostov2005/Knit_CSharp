@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
@@ -8,24 +9,42 @@ namespace Knit_CSharp
     {
         public void Run()
         {
-            // Генерация случайной строки длиной 100000 символов
+            // Строка
             string text = GenerateRandomString(100_000);
-            // Генерация случайной подстроки длиной 3 символа
-            string pattern = GenerateRandomString(100);
-            Console.WriteLine($"Искомая подстрока: {pattern}");
 
-            // Замер времени выполнения Прямого поиска (наивный поиск)
+            string[] patterns = new string[3];
+            for (int i = 0; i < patterns.Length; i++)
+            {
+                patterns[i] = GenerateRandomString(100); // Подстроки
+            }
+
+            // Построение массивов степеней и префиксных хешей для текста
+            const long P = 37; // Простое число для хеширования
+            long[] pwp = CalculatePowers(text.Length, P); // Массив степеней P
+            long[] h = CalculatePrefixHashes(text, pwp); // Хэши префиксов текста
+
+            // Замер времени выполнения поиска всех подстрок
             Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            int naiveResult = NaiveSearch(text, pattern);
-            stopwatch.Stop();
-            Console.WriteLine($"Наивный поиск: результат = {naiveResult}, время = {stopwatch.Elapsed.TotalMilliseconds} мс");
 
-            // Замер времени выполнения Алгоритма Карпа-Рабина
-            stopwatch.Restart();
-            int karpRabinResult = RabinKarpSearch(text, pattern);
+            // Прямой поиск для всех подстрок
+            stopwatch.Start();
+            foreach (var pattern in patterns)
+            {
+                int result = NaiveSearch(text, pattern);
+                Console.WriteLine($"Наивный поиск: результат = {result}");
+            }
             stopwatch.Stop();
-            Console.WriteLine($"Алгоритм Карпа-Рабина: результат = {karpRabinResult}, время = {stopwatch.Elapsed.TotalMilliseconds} мс");
+            Console.WriteLine($"Наивный поиск: время = {stopwatch.Elapsed.TotalMilliseconds} мс");
+
+            // Алгоритм Карпа-Рабина для всех подстрок
+            stopwatch.Restart();
+            foreach (var pattern in patterns)
+            {
+                int result = RabinKarpSearch(text, pattern, h, pwp);
+                Console.WriteLine($"Алгоритм Карпа-Рабина:  результат = {result}");
+            }
+            stopwatch.Stop();
+            Console.WriteLine($"Алгоритм Карпа-Рабина: время = {stopwatch.Elapsed.TotalMilliseconds} мс");
         }
 
         // Прямой поиск подстроки
@@ -48,17 +67,13 @@ namespace Knit_CSharp
             return -1; // Подстрока не найдена
         }
 
-        // Алгоритм Карпа-Рабина
-        static int RabinKarpSearch(string text, string pattern)
+        // Алгоритм Карпа-Рабина для поиска подстроки
+        static int RabinKarpSearch(string text, string pattern, long[] h, long[] pwp)
         {
             int n = text.Length;
             int m = pattern.Length;
-            const long P = 37; // Простое число для хеширования
-            long[] pwp = CalculatePowers(n, P); // Массив степеней P
-            long[] h = CalculatePrefixHashes(text, pwp); // Хэши префиксов текста
             long h_s = CalculateHash(pattern, pwp); // Хэш для подстроки
 
-            // Поиск подстроки
             for (int i = 0; i + m - 1 < n; i++)
             {
                 // Находим хэш для текущего окна текста
@@ -78,7 +93,7 @@ namespace Knit_CSharp
                         if (text[i + j] != pattern[j])
                             break;
                     }
-                    if (j == m) // Совпадение найдено
+                    if (j == m)
                         return i;
                 }
             }

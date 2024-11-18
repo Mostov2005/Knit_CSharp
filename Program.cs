@@ -20,8 +20,12 @@ namespace Knit_CSharp
 
 
             // Вызов метода из File2.cs
-            Class4 file4 = new Class4();
-            file4.Run();
+            // Class4 file4 = new Class4();
+            // file4.Run();
+
+            // Вызов метода из File2.cs
+            Class5 file5 = new Class5();
+            file5.Run();
         }
     }
 }

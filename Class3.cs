@@ -73,7 +73,7 @@ namespace Knit_CSharp
 
         public static List<Employee> FilterEmployeesBySalary(List<Employee> employees, decimal salaryThreshold)
         {
-            return employees.Where(e => e.Salary < salaryThreshold).ToList();
+            return employees.Where(x => x.Salary < salaryThreshold).ToList();
         }
 
         public static List<Employee> SortEmployeesByExperience(List<Employee> employees)

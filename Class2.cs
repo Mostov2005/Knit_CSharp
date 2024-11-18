@@ -12,18 +12,17 @@ namespace Knit_CSharp
             // Строка
             string text = GenerateRandomString(100_000);
 
-            string[] patterns = new string[3];
+            string[] patterns = new string[10];
             for (int i = 0; i < patterns.Length; i++)
             {
                 patterns[i] = GenerateRandomString(100); // Подстроки
             }
 
             // Построение массивов степеней и префиксных хешей для текста
-            const long P = 37; // Простое число для хеширования
+            const long P = 37;
             long[] pwp = CalculatePowers(text.Length, P); // Массив степеней P
             long[] h = CalculatePrefixHashes(text, pwp); // Хэши префиксов текста
 
-            // Замер времени выполнения поиска всех подстрок
             Stopwatch stopwatch = new Stopwatch();
 
             // Прямой поиск для всех подстрок

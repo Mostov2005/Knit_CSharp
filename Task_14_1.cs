@@ -27,7 +27,7 @@ namespace Knit_CSharp
         }
     }
 
-    class Class1
+    class Task_14_1
     {
         public void Run()
         {
@@ -44,7 +44,7 @@ namespace Knit_CSharp
 
         static public SPoint[] Input() // Читаем данные из файла
         {
-            using (StreamReader fileIn = new StreamReader("C:\\Users\\Mostov\\Knit_CSharp\\System_File\\input.txt"))
+            using (StreamReader fileIn = new StreamReader("C:\\Users\\Mostov\\Knit_CSharp\\System_File\\input3.txt"))
             {
                 int n = int.Parse(fileIn.ReadLine());
                 SPoint[] ar = new SPoint[n];

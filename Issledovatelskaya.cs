@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Knit_CSharp
 {
-    public class Class2
+    public class Issledovatelskaya
     {
         public void Run()
         {
             // Строка
             string text = GenerateRandomString(100_000);
 
-            string[] patterns = new string[10];
+            string[] patterns = new string[100];
             for (int i = 0; i < patterns.Length; i++)
             {
                 patterns[i] = GenerateRandomString(100); // Подстроки
@@ -30,7 +30,7 @@ namespace Knit_CSharp
             foreach (var pattern in patterns)
             {
                 int result = NaiveSearch(text, pattern);
-                Console.WriteLine($"Наивный поиск: результат = {result}");
+                //Console.WriteLine($"Наивный поиск: результат = {result}");
             }
             stopwatch.Stop();
             Console.WriteLine($"Наивный поиск: время = {stopwatch.Elapsed.TotalMilliseconds} мс");
@@ -40,7 +40,7 @@ namespace Knit_CSharp
             foreach (var pattern in patterns)
             {
                 int result = RabinKarpSearch(text, pattern, h, pwp);
-                Console.WriteLine($"Алгоритм Карпа-Рабина:  результат = {result}");
+                //Console.WriteLine($"Алгоритм Карпа-Рабина:  результат = {result}");
             }
             stopwatch.Stop();
             Console.WriteLine($"Алгоритм Карпа-Рабина: время = {stopwatch.Elapsed.TotalMilliseconds} мс");
@@ -75,18 +75,16 @@ namespace Knit_CSharp
 
             for (int i = 0; i + m - 1 < n; i++)
             {
-                // Находим хэш для текущего окна текста
                 long cur_h = h[i + m - 1];
                 if (i > 0)
                 {
-                    cur_h -= h[i - 1]; // Корректируем хэш для текущего окна
+                    cur_h -= h[i - 1];
                 }
 
-                // Сравниваем хэши
                 if (cur_h == h_s * pwp[i])
                 {
                     int j;
-                    // Если хэши совпадают, проверяем символы
+                    // Если хэши совпадают, проверяем символы (На вссякий)
                     for (j = 0; j < m; j++)
                     {
                         if (text[i + j] != pattern[j])

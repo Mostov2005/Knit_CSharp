@@ -16,14 +16,28 @@ namespace Knit_CSharp
             string outputFilePath_15_1 = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\output_for_15_1.txt";
             string outputFilePath_16_1 = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\output_for_16_1.txt";
 
-            List<int> numbers = File
-                .ReadAllText(inputFilePath)
-                .Split(new[] { ";", ",", " ", "\n", "\t" },
-                    StringSplitOptions.RemoveEmptyEntries)
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Select(x => int.Parse(x.Trim()))
-                .ToList();
+            // List<int> numbers = File
+            //     .ReadAllText(inputFilePath)
+            //     .Split(new[] { ";", ",", " ", "\n", "\t" },
+            //         StringSplitOptions.RemoveEmptyEntries)
+            //     .Where(x => !string.IsNullOrWhiteSpace(x))
+            //     .Select(x => int.Parse(x.Trim()))
+            //     .ToList();
 
+            string fileContent = File.ReadAllText(inputFilePath);
+            List<int> numbers = new List<int>();
+
+            // Разделение содержимого файла на элементы
+            string[] parts = fileContent.Split(new[] { ";", ",", " ", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string part in parts)
+            {
+                if (!string.IsNullOrWhiteSpace(part))
+                {
+                    int number = int.Parse(part.Trim());
+                    numbers.Add(number);
+                }
+            }
 
             foreach (int a in numbers)
             {

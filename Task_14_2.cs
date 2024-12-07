@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Knit_CSharp
 {
-    public struct Employee
+    public struct Employee : IComparable<Employee>
     {
-        public string FullName; // Полное имя
+        public string FullName; // Имя
         public int YearOfHiring; // Год принятия на работу
         public string Position; // Должность
         public decimal Salary; // ЗП
@@ -20,64 +19,57 @@ namespace Knit_CSharp
             this.Salary = salary;
             this.WorkExperience = workExperience;
         }
+
+        // Реализация CompareTo для сортировки по рабочему стажу
+        public int CompareTo(Employee other)
+        {
+            return -this.WorkExperience.CompareTo(other.WorkExperience);
+        }
     }
 
     public class Task_14_2
     {
         public void Run()
         {
-            string inputFilePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\employees(14_2).txt"; // Путь к входному файлу
-            string outputFilePathLinq = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\filtered_employees_linq(14_2).txt"; // Путь для LINQ
-            string outputFilePathNoLinq = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\filtered_employees_no_linq(14_2).txt"; // Путь для циклов
-            decimal salaryThreshold = 50000m; // Порог зарплаты
+            string inputFilePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\employees(14_2).txt";
+            string outputFilePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\filtered_employees_14_2.txt"; // Путь к выходному файлу
+            decimal salaryThreshold = 70000m; // Порог зарплаты
 
             // Чтение сотрудников из файла
-            List<Employee> employees = ReadEmployeesFromFile(inputFilePath);
+            Employee[] employees = ReadEmployeesFromFile(inputFilePath);
 
-            var filteredAndSortedLinq = 
-                (from employee in employees
-                 where employee.Salary < salaryThreshold
-                 orderby employee.WorkExperience //  descending // - для сортировки в обратном порядке
-                 select employee).ToList();
+            // Фильтрация сотрудников по зарплате
+            //Employee[] filteredEmployees = Array.FindAll(employees, e => e.Salary < salaryThreshold);
 
-            // Запись результата LINQ в файл
-            WriteEmployeesToFile(outputFilePathLinq, filteredAndSortedLinq);
+            List<Employee> tempEmployees = new List<Employee>();
 
-            List<Employee> filteredEmployees = new List<Employee>();
             foreach (var employee in employees)
             {
                 if (employee.Salary < salaryThreshold)
                 {
-                    filteredEmployees.Add(employee);
+                    tempEmployees.Add(employee);
                 }
             }
 
-            // Сортировка
-            for (int i = 0; i < filteredEmployees.Count - 1; i++)
-            {
-                for (int j = 0; j < filteredEmployees.Count - i - 1; j++)
-                {
-                    if (filteredEmployees[j].WorkExperience > filteredEmployees[j + 1].WorkExperience)
-                    {
-                        var temp = filteredEmployees[j];
-                        filteredEmployees[j] = filteredEmployees[j + 1];
-                        filteredEmployees[j + 1] = temp;
-                    }
-                }
-            }
+            // Преобразуем список в массив
+            Employee[] filteredEmployees = tempEmployees.ToArray();
 
-            // Запись результата без LINQ в файл
-            WriteEmployeesToFile(outputFilePathNoLinq, filteredEmployees);
+
+            // Сортировка сотрудников по рабочему стажу
+            Array.Sort(filteredEmployees);
+
+            // Запись результата в файл
+            WriteEmployeesToFile(outputFilePath, filteredEmployees);
         }
 
-        public static List<Employee> ReadEmployeesFromFile(string filePath)
+        public static Employee[] ReadEmployeesFromFile(string filePath)
         {
-            List<Employee> employees = new List<Employee>();
             string[] lines = File.ReadAllLines(filePath);
+            Employee[] employees = new Employee[lines.Length];
 
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Length; i++)
             {
-                string[] parts = line.Split(';');
+                string[] parts = lines[i].Split(';');
                 if (parts.Length == 5)
                 {
                     string fullName = parts[0];
@@ -86,14 +78,13 @@ namespace Knit_CSharp
                     decimal salary = decimal.Parse(parts[3]);
                     int workExperience = int.Parse(parts[4]);
 
-                    Employee employee = new Employee(fullName, yearOfHiring, position, salary, workExperience);
-                    employees.Add(employee);
+                    employees[i] = new Employee(fullName, yearOfHiring, position, salary, workExperience);
                 }
             }
             return employees;
         }
 
-        public static void WriteEmployeesToFile(string filePath, List<Employee> employees)
+        public static void WriteEmployeesToFile(string filePath, Employee[] employees)
         {
             using (StreamWriter writer = new StreamWriter(filePath))
             {

@@ -27,23 +27,57 @@ namespace Knit_CSharp
             System.Console.WriteLine("Хеш-код первого массива: {0}", array.GetHashCode());
             System.Console.WriteLine("Хеш-код второго массива: {0}", twoArray.GetHashCode());
             System.Console.WriteLine("Хеш-код третьего массива: {0}", threeArray.GetHashCode());
+
+            Console.WriteLine("Типы массивов равны?: {0}", array.GetType() == twoArray.GetType());
+
+            // 5. 
+            Console.WriteLine("Длина первого массива: {0}", array.Length);
+
+            // 5. 
+            array.ScalarMultiplier = 2;
+            Console.WriteLine("Первый массив после умножения на 2: {0}", array);
+
+            // 6. Использование индексатора
+            Console.WriteLine("Первый элемент первого массива: {0}", array[0]);
+            array[0] = 100; // Изменяем первый элемент
+            Console.WriteLine("После изменения первого элемента: {0}", array);
+
+
+            // 8. 
+            ++twoArray;
+            Console.WriteLine("После увеличения на 1: {0}", twoArray);
+
+            // Уменьшение всех элементов на 1
+            --twoArray;
+            Console.WriteLine("После уменьшения на 1: {0}", twoArray);
+
+            // Проверка упорядоченности массива
+            Console.WriteLine("Массив второй упорядочен?: {0}", !twoArray);
+
+            // Умножение всех элементов на 2
+            MyArray multipliedArray = twoArray * 2;
+            Console.WriteLine("Массив второй после умножения на 2: {0}", multipliedArray);
+
+            // операции преобразования класса массив в одномерный массив (и наоборот).
+            int[] standardArray = array.ToArray(); // Преобразование в int[]
+            System.Console.WriteLine(standardArray);
+
+            int[] standardArray2 = { 10, 20, 30 };
+            MyArray array_back = MyArray.FromArray(standardArray2);
+            System.Console.WriteLine(array_back);
+
         }
     }
 
     public class MyArray
     {
-        public int[] IntArray;
+        private int[] IntArray;
 
-        // Конструкторы:
+        // 2. Конструкторы:
         public MyArray(MyArray array)
         {
-            this.IntArray = array.IntArray;
-            int n = array.IntArray.Length;
-
-            for (int i = 1; i < n + 1; i++)
-            {
-                this.IntArray[i - 1] = i;
-            }
+            this.IntArray = new int[array.Length];
+            Array.Copy(array.IntArray, this.IntArray, array.Length);
         }
 
         public MyArray()
@@ -63,6 +97,7 @@ namespace Knit_CSharp
             }
         }
 
+        // 3.
         public int summArray()
         {
             int summ = 0;
@@ -86,11 +121,13 @@ namespace Knit_CSharp
             return product;
         }
 
+        // 4. 
         public override string ToString()
         {
             return string.Join(", ", this.IntArray);
         }
 
+        // 4. 
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -100,10 +137,8 @@ namespace Knit_CSharp
 
             MyArray other = (MyArray)obj;
 
-            if (IntArray == null || other.IntArray == null)
-            {
-                return IntArray == other.IntArray; // оба null - равны
-            }
+            if (IntArray == null && other.IntArray == null) return true;
+            if (IntArray == null || other.IntArray == null) return false;
 
             if (IntArray.Length != other.IntArray.Length)
             {
@@ -121,12 +156,15 @@ namespace Knit_CSharp
             return true;
         }
 
+        // 4. 
         public override int GetHashCode()
         {
             int hash = 1;
             int con = 17; // Константа для получения хеш-кода  
             if (IntArray != null)
             {
+
+                // return IntArray.GetHashCode();
                 foreach (int i in IntArray)
                 {
                     hash = hash * con * i;
@@ -135,5 +173,86 @@ namespace Knit_CSharp
             }
             return hash;
         }
+
+        // 5. Свойство для получения размерности массива
+        public int Length
+        {
+            get { return IntArray.Length; }
+        }
+
+        // 5. Свойство для умножения всех элементов массива на скаляр
+        public int ScalarMultiplier
+        {
+            set
+            {
+                for (int i = 0; i < IntArray.Length; i++)
+                {
+                    this.IntArray[i] *= value;
+                }
+            }
+        }
+
+        // 6. Индексатор для доступа к элементам массива
+        public int this[int index]
+        {
+            get { return IntArray[index]; }
+            set { IntArray[index] = value; }
+        }
+
+        // 7. Перегрузка оператора ++
+        public static MyArray operator ++(MyArray myArray)
+        {
+            for (int i = 0; i < myArray.Length; i++)
+            {
+                myArray.IntArray[i]++;
+            }
+            return myArray;
+        }
+
+        // 7. Перегрузка оператора --
+        public static MyArray operator --(MyArray myArray)
+        {
+            for (int i = 0; i < myArray.Length; i++)
+            {
+                myArray.IntArray[i]--;
+            }
+            return myArray;
+        }
+
+        // 7. Перегрузка оператора !
+        public static bool operator !(MyArray myArray)
+        {
+            for (int i = 1; i < myArray.Length; i++)
+            {
+                if (myArray.IntArray[i] < myArray.IntArray[i - 1])
+                    return true;
+            }
+            return false;
+        }
+
+        // 7. Перегрузка бинарного оператора *
+        public static MyArray operator *(MyArray myArray, int scalar)
+        {
+            for (int i = 0; i < myArray.Length; i++)
+            {
+                myArray.IntArray[i] *= scalar;
+            }
+            return myArray;
+        }
+
+        // 7. Преобразование в одномерный массив
+        public int[] ToArray()
+        {
+            return (int[])IntArray.Clone();
+        }
+
+        // 7.
+        public static MyArray FromArray(int[] arr)
+        {
+            MyArray myArray = new MyArray(arr.Length);
+            Array.Copy(arr, myArray.IntArray, arr.Length);
+            return myArray;
+        }
+
     }
 }

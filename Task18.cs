@@ -6,6 +6,11 @@ namespace Knit_CSharp
     {
         public void Run()
         {
+
+
+            Teacher a = new Teacher("Сидоров", DateTime.Parse("1980-03-25"), "Математический", "Доцент", 15);
+            System.Console.WriteLine(a);
+
             string filePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\input_for_18.txt";
             var persons = new List<Person>();
 

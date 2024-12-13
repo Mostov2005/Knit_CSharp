@@ -10,19 +10,14 @@ public class Task1_1
 {
     public void Run()
     {
-        System.Console.Write("a= ");
-        int firstNumber = Convert.ToInt32(System.Console.ReadLine());
-        System.Console.Write("a= ");
-        int secondNumber = Convert.ToInt32(System.Console.ReadLine());
+        char charCode = Convert.ToChar(Console.Read());   // Читает код символа (тип int)
+        System.Console.WriteLine(charCode);
 
-        summ(firstNumber, secondNumber);
-        // System.Console.WriteLine(s);
-
-        }
-    public void summ(int a, int b){
-        System.Console.WriteLine(a + b);
+        double x = Math.E;
+        Console.WriteLine("E={0,20}", x);
+        Console.WriteLine("E={0,10}", x);
     }
+}
 
-    }
 
 

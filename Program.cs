@@ -7,8 +7,8 @@ namespace Knit_CSharp
         static void Main(string[] args)
         {
             
-            Task1_1 file2 = new Task1_1();
-            file2.Run();
+            // Task1_1 file2 = new Task1_1();
+            // file2.Run();
 
             // Issledovatelskaya file2 = new Issledovatelskaya();
             // file2.Run();
@@ -23,8 +23,8 @@ namespace Knit_CSharp
             // Task_15_and_16_2 file5 = new Task_15_and_16_2();
             // file5.Run();
 
-            // Task17 file_6 = new Task17();
-            // file_6.Run();
+            Task17 file_6 = new Task17();
+            file_6.Run();
 
             // Task18 file_7 = new Task18();
             // file_7.Run();

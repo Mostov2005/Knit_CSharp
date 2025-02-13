@@ -45,6 +45,7 @@ namespace Knit_CSharp
 
                 System.Console.WriteLine("\n Начало 6 пунтка \n");
 
+                //System.Console.WriteLine(array[144]);
 
                 Console.WriteLine("Первый элемент первого массива: {0}", array[0]);
                 array[0] = 100; // Изменяем первый элемент

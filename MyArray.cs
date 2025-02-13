@@ -138,8 +138,30 @@ namespace Knit_CSharp
         // 6. Индексатор для доступа к элементам массива
         public int this[int index]
         {
-            get { return IntArray[index]; }
-            set { IntArray[index] = value; }
+            get
+            {
+                if (index >= 0 && index < IntArray.Length)
+                {
+                    return IntArray[index];
+                }
+                else
+                {
+                    throw new("Нет элемента с таким индексом");
+                }
+
+            }
+            set
+            {
+                if (index >= 0 && index < IntArray.Length)
+                {
+                    IntArray[index] = value;
+                }
+                else
+                {
+                    throw new("Нет элемента с таким индексом");
+                }
+
+            }
         }
 
         // 7. Перегрузка оператора ++
@@ -200,7 +222,7 @@ namespace Knit_CSharp
         //     return myArray;
         // }
 
-        //неявное преобразование типа DemoArray в int []
+        //неявное преобразование типа Myarray в int []
         public static implicit operator int[](MyArray a)
         {
             int[] temp = new int[a.Length];
@@ -211,7 +233,7 @@ namespace Knit_CSharp
             return temp;
         }
 
-        //неявное преобразование типа int [] в DemoArray
+        //неявное преобразование типа int [] в Myarray
         public static implicit operator MyArray(int[] a)
         {
             return new MyArray(a);

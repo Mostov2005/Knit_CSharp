@@ -10,8 +10,8 @@ namespace Knit_CSharp
             // Task1_1 file2 = new Task1_1();
             // file2.Run();
 
-            Issledovatelskaya file2 = new Issledovatelskaya();
-            file2.Run();
+            // Issledovatelskaya file2 = new Issledovatelskaya();
+            // file2.Run();
 
             // Task_14_2 file3 = new Task_14_2();
             // file3.Run();
@@ -26,8 +26,8 @@ namespace Knit_CSharp
             // Task17 file_6 = new Task17();
             // file_6.Run();
 
-            // Task18 file_7 = new Task18();
-            // file_7.Run();
+            Task18 file_7 = new Task18();
+            file_7.Run();
 
         }
     }

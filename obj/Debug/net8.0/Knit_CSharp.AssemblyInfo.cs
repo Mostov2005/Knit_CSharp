@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Knit_CSharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+862610d4b560069895a39850e334e2f73e6e270c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d863963f7b601dcc024155b2af6dfbce4e7b6e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Knit_CSharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Knit_CSharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

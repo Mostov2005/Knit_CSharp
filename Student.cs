@@ -1,11 +1,15 @@
+using System.Text.Json.Serialization;
+
 namespace Knit_CSharp
 {
     // Класс Студент
+    [Serializable]
     public class Student : Person, IApplicant, IStudent
     {
         public string Faculty { get; set; }
         public int Course { get; set; }
 
+        [JsonConstructor]
         public Student(string lastName, DateTime birthDate, string faculty, int course)
             : base(lastName, birthDate)
         {

@@ -1,0 +1,44 @@
+[
+  {
+    "$type": "applicant",
+    "Faculty": "\u0424\u0438\u0437\u0438\u0447\u0435\u0441\u043A\u0438\u0439",
+    "LastName": "\u0418\u0432\u0430\u043D\u043E\u0432",
+    "BirthDate": "2007-01-01T00:00:00"
+  },
+  {
+    "$type": "applicant",
+    "Faculty": "\u041A\u041D\u0418\u0418\u0422",
+    "LastName": "\u0418\u0432\u0430\u043D\u043E\u0432",
+    "BirthDate": "2006-05-15T00:00:00"
+  },
+  {
+    "$type": "student",
+    "Faculty": "\u0425\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0439",
+    "Course": 2,
+    "LastName": "\u041F\u0435\u0442\u0440\u043E\u0432",
+    "BirthDate": "2004-02-10T00:00:00"
+  },
+  {
+    "$type": "student",
+    "Faculty": "\u041A\u041D\u0418\u0418\u0422",
+    "Course": 2,
+    "LastName": "\u041F\u0435\u0442\u0440\u043E\u0432",
+    "BirthDate": "2005-09-22T00:00:00"
+  },
+  {
+    "$type": "teacher",
+    "Faculty": "\u041C\u0430\u0442\u0435\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439",
+    "Position": "\u0414\u043E\u0446\u0435\u043D\u0442",
+    "Experience": 15,
+    "LastName": "\u0421\u0438\u0434\u043E\u0440\u043E\u0432",
+    "BirthDate": "1980-03-25T00:00:00"
+  },
+  {
+    "$type": "teacher",
+    "Faculty": "\u041A\u041D\u0418\u0418\u0422",
+    "Position": "\u0414\u043E\u0446\u0435\u043D\u0442",
+    "Experience": 15,
+    "LastName": "\u0421\u0438\u0434\u043E\u0440\u043E\u0432",
+    "BirthDate": "1970-01-13T00:00:00"
+  }
+]

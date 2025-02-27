@@ -1,13 +1,20 @@
+using System.Text.Json.Serialization;
+
 namespace Knit_CSharp
 {
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "$type")]
+    [JsonDerivedType(typeof(Applicant), "applicant")]
+    [JsonDerivedType(typeof(Student), "student")]
+    [JsonDerivedType(typeof(Teacher), "teacher")]
     public abstract class Person : IComparable<Person>
     {
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 
-        protected Person(string lastName, DateTime birthDate)
+        [JsonConstructor] // Добавляем конструктор для JSON-десериализации
+        public Person(string name, DateTime birthDate)
         {
-            LastName = lastName;
+            LastName = name;
             BirthDate = birthDate;
         }
 

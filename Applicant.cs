@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+
+
 namespace Knit_CSharp
 {
     // Класс Абитуриент
@@ -5,6 +8,7 @@ namespace Knit_CSharp
     {
         public string Faculty { get; set; }
 
+        [JsonConstructor]
         public Applicant(string lastName, DateTime birthDate, string faculty)
             : base(lastName, birthDate)
         {

@@ -11,7 +11,7 @@ namespace Knit_CSharp
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 
-        [JsonConstructor] // Добавляем конструктор для JSON-десериализации
+        [JsonConstructor] // Конструктор для JSON-десериализации
         public Person(string name, DateTime birthDate)
         {
             LastName = name;
@@ -27,7 +27,7 @@ namespace Knit_CSharp
             return age;
         }
 
-        // Реализация метода CompareTo для сортировки по дате рождения
+        // Реализация метода CompareTo для сортировки по дате рождения Практикум 19
         public int CompareTo(Person other)
         {
             if (other == null) return 1; // Если другой объект null, текущий объект считается больше

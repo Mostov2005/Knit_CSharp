@@ -13,6 +13,7 @@ namespace Knit_CSharp
             string inputFilePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\input_for_18.txt";
             string jsonFilePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\data.json";
             string outputFilePath = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\output_for_18.txt";
+            string outputFilePath2 = "C:\\Users\\Mostov\\Knit_CSharp\\System_File\\data2.json";
 
 
             // var persons = ReadFromTextFile(inputFilePath);
@@ -45,6 +46,9 @@ namespace Knit_CSharp
                 System.Console.WriteLine("Готово!");
 
             }
+
+
+            SaveToJson(persons, outputFilePath2);
         }
 
         public List<Person> ReadFromTextFile(string filePath)
@@ -75,13 +79,7 @@ namespace Knit_CSharp
             if (!File.Exists(filePath)) return new List<Person>();
 
             string json = File.ReadAllText(filePath);
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                WriteIndented = true
-            };
-
-            return JsonSerializer.Deserialize<List<Person>>(json, options) ?? new List<Person>();
+            return JsonSerializer.Deserialize<List<Person>>(json) ?? new List<Person>();
         }
     }
 }
@@ -106,3 +104,10 @@ public interface ITeacher
 
 }
 
+
+
+// var options = new JsonSerializerOptions
+// {
+//     PropertyNameCaseInsensitive = true,
+//     WriteIndented = true
+// };

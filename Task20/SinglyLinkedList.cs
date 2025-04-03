@@ -19,17 +19,17 @@ class SinglyLinkedList
         tail = head;
     }
 
-    public void AddToTail(int data)
+    public void AddToTail(int value)
     {
         if (head == null)
         {
-            Initialize(data);
+            Initialize(value);
             return;
         }
 
-        Node newNode = new Node(data);
-        tail.Next = newNode;
-        tail = newNode;
+        Node newNode = new Node(value); // Создаётся объект
+        tail.Next = newNode; // В текущем хвосте создаётся ссылка на следующий объект
+        tail = newNode; // новый хвост
     }
 
     public int RemoveHead()
@@ -70,4 +70,29 @@ class SinglyLinkedList
             temp = temp.Next;
         }
     }
+
+
+    public void RemoveDuplicates() // Вариант 15
+    {
+        if (head == null) return;
+
+        HashSet<int> seen = new HashSet<int>();
+        Node current = head;
+        seen.Add(current.Data);
+
+        while (current.Next != null)
+        {
+            if (seen.Contains(current.Next.Data))
+            {
+                current.Next = current.Next.Next;
+                if (current.Next == null) tail = current;
+            }
+            else
+            {
+                seen.Add(current.Next.Data);
+                current = current.Next;
+            }
+        }
+    }
+
 }

@@ -28,7 +28,7 @@ namespace Knit_CSharp
             {
                 Console.SetOut(writer);
                 list.PrintList();
-                list.RemoveAfterValue(7);
+                list.RemoveDuplicates();
                 list.PrintList();
             }
         }

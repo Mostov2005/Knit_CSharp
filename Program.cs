@@ -29,11 +29,11 @@ namespace Knit_CSharp
             // Task18 file_7 = new Task18();
             // file_7.Run();
 
-            Task20 file_8 = new Task20();
-            file_8.Run();
+            // Task20 file_8 = new Task20();
+            // file_8.Run();
 
-            // Task21 file_9 = new Task21();
-            // file_9.Run();
+            Task21 file_9 = new Task21();
+            file_9.Run();
         }
     }
 }

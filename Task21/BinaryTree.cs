@@ -75,6 +75,15 @@ namespace Knit_CSharp
                 return count + CountNodesWithOneChild(r.left) + CountNodesWithOneChild(r.rigth);
             }
 
+            // сумма узлов до k-го уровня Задание 2
+            public static int SumNodesUpToLevel(Node r, int level, int k)
+            {
+                if (r == null || level > k)
+                    return 0;
+
+                return Convert.ToInt32(r.inf) + SumNodesUpToLevel(r.left, level + 1, k) + SumNodesUpToLevel(r.rigth, level + 1, k);
+            }
+
         } //конец вложенного класса
 
 
@@ -97,6 +106,7 @@ namespace Knit_CSharp
         {
             Node.Add(ref tree, nodeInf);
         }
+        
         //организация различных способов обхода дерева
         public void Preorder()
         {
@@ -114,6 +124,12 @@ namespace Knit_CSharp
         public int CountNodesWithOneChild()
         {
             return Node.CountNodesWithOneChild(tree);
+        }
+
+        // Вычисление суммы узлов до k-го уровня Задание 2
+        public int SumNodesUpToLevel(int k)
+        {
+            return Node.SumNodesUpToLevel(tree, 1, k);
         }
 
 

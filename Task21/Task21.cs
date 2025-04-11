@@ -12,7 +12,7 @@ namespace Knit_CSharp
             String inputFile2 = "C:\\Users\\Mostov\\Knit_CSharp\\Task21\\input2.txt";
             String inputFile3 = "C:\\Users\\Mostov\\Knit_CSharp\\Task21\\input3.txt";
 
-            string inputData = File.ReadAllText(inputFile3);
+            string inputData = File.ReadAllText(inputFile2);
             string[] numbers = inputData.Split(new[] { ';', '.', ' ', '_', ',', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
             System.Console.WriteLine(string.Join(", ", numbers));
@@ -32,7 +32,7 @@ namespace Knit_CSharp
             tree.Inorder();
             System.Console.WriteLine();
 
-            System.Console.WriteLine(tree.CountNodesWithOneChild());
+            System.Console.WriteLine(tree.SumNodesUpToLevel(3));
         }
     }
 }
